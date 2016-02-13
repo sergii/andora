@@ -1,0 +1,4 @@
+---
+- name: Set current release link
+  file: src={{ release_path.stdout }} path={{ current_path }} state=link follow=yes
+...

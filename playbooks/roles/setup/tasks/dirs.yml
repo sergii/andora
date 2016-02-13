@@ -1,0 +1,29 @@
+---
+- name: Ensure releases directory exists
+  file: path={{ releases_path }} state=directory mode=0775
+  remote_user: "{{ app_name }}"
+
+- name: Ensure shared directory exists
+  file: path={{ shared_path }} state=directory mode=0775
+  remote_user: "{{ app_name }}"
+
+- name: Ensure shared/assets directory exists
+  file: path={{ assets_path }} state=directory mode=0775
+  remote_user: "{{ app_name }}"
+
+- name: Ensure shared/log directory exists
+  file: path={{ log_path }} state=directory mode=0775
+  remote_user: "{{ app_name }}"
+
+- name: Ensure production.log file exists
+  file: path={{ log_path }}/production.log state=touch mode=0666
+  remote_user: "{{ app_name }}"
+
+- name: Ensure shared/uploads directory exists
+  file: path={{ uploads_path }} state=directory mode=0775
+  remote_user: "{{ app_name }}"
+
+- name: Ensure shared/tmp directory exists
+  file: path={{ tmp_path }} state=directory mode=0775
+  remote_user: "{{ app_name }}"
+...

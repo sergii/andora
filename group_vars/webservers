@@ -1,0 +1,23 @@
+---
+app_name: "app_name"
+
+# General dirs
+deploy_to: "/home/{{ app_name }}"
+releases_path: "{{ deploy_to }}/releases"
+current_path: "{{ deploy_to }}/current"
+
+# Shared dirs
+shared_path: "{{ deploy_to }}/shared"
+assets_path: "{{ shared_path }}/assets"
+log_path: "{{ shared_path }}/log"
+uploads_path: "{{ shared_path }}/uploads"
+tmp_path: "{{ shared_path }}/tmp"
+
+# Git repository
+git_repo: "ssh://git@gitgub.com/username/repository.git"
+git_branch: "master"
+git_cache_path: "{{ deploy_to }}/repo"
+
+# Number of releases to keep in your hosts, if 0, unlimited releases will be kept
+keep_releases: 5
+...

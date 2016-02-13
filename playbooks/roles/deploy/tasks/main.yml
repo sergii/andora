@@ -1,0 +1,6 @@
+---
+- include: release.yml
+- include: symlink_shared.yml
+- include: prepare.yml
+- include: symlink_current.yml
+...

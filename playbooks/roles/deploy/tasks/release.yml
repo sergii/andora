@@ -1,0 +1,34 @@
+---
+- name: Get release version
+  command: date +%Y%m%d%H%M%S
+  register: release_version
+
+- name: Set release directory
+  command: echo "{{ releases_path }}/{{ release_version.stdout }}"
+  register: release_path
+
+- name: Checkout git repository from bitbucket.org
+  git:
+    repo: "{{ git_repo }}"
+    dest: "{{ git_cache_path }}"
+    version: "{{ git_branch }}"
+    accept_hostkey: yes
+    force: yes
+
+- name: Checkout git repository into release directory
+  command: git checkout-index -f -a --prefix="{{ release_path.stdout }}/"
+  args:
+    chdir: "{{ git_cache_path }}"
+
+- name: Copy .env file
+  template: src=env.j2 dest={{ release_path.stdout }}/.env
+
+- name: Copy release version into REVISION file
+  copy: content={{ release_version.stdout }} dest={{ release_path.stdout }}/REVISION
+
+- name: Clean up releases
+  shell: ls -1dt {{ releases_path }}/* | tail -n +{{ keep_releases | int + 1 }} | xargs rm -rf
+  when: keep_releases > 0
+
+- debug: msg="Current release is {{ release_version.stdout }}"
+...

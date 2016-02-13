@@ -1,0 +1,8 @@
+---
+- name: Deploy release
+  hosts: webservers
+  remote_user: "{{ app_name }}"
+  gather_facts: no
+  roles:
+    - {role: deploy}
+...

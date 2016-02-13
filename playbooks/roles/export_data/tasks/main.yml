@@ -1,0 +1,27 @@
+---
+- name: Export dump file
+  copy:
+    src: dump.sql
+    dest: "{{ tmp_path }}/dump.sql"
+
+- name: Set rails container id
+  shell: docker-compose -f docker-compose.prod.yml -p "{{ app_name }}" ps -q rails | head -1
+  register: rails
+  args:
+    chdir: "{{ current_path }}"
+
+- name: Rake db drop
+  command: docker exec -it "{{ rails.stdout }}" sh -c 'bundle exec rake db:drop'
+  args:
+    chdir: "{{ current_path }}"
+
+- name: Rake db create
+  command: docker exec -it "{{ rails.stdout }}" sh -c 'bundle exec rake db:create'
+  args:
+    chdir: "{{ current_path }}"
+
+- name: Load data from dump file
+  command: docker exec -it "{{ rails.stdout }}" sh -c 'mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" "$MYSQL_ENV_MYSQL_DATABASE" < /mnt/src/tmp/dump.sql'
+  args:
+    chdir: "{{ current_path }}"
+...

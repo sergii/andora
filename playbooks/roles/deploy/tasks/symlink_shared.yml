@@ -1,0 +1,13 @@
+---
+- name: Set assets link
+  file: src={{ assets_path }} path={{ release_path.stdout }}/public/assets state=link follow=yes
+
+- name: Set log link
+  file: src={{ log_path }} path={{ release_path.stdout }}/log state=link follow=yes
+
+- name: Set uploads link
+  file: src={{ uploads_path }} path={{ release_path.stdout }}/public/uploads state=link follow=yes
+
+- name: Set tmp link
+  file: src={{ tmp_path }} path={{ release_path.stdout }}/tmp state=link follow=yes
+...

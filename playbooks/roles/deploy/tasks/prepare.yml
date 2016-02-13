@@ -1,0 +1,39 @@
+---
+- name: Up docker services
+  command: docker-compose -f docker-compose.prod.yml -p "{{ app_name }}" up -d
+  args:
+    chdir: "{{ release_path.stdout }}"
+
+- name: Set rails container id
+  shell: docker-compose -f docker-compose.prod.yml -p "{{ app_name }}" ps -q rails | head -1
+  register: rails
+  args:
+    chdir: "{{ release_path.stdout }}"
+
+- debug: msg="Rails container ID is {{ rails.stdout }}"
+
+- name: Install gems
+  command: docker exec -it  "{{ rails.stdout }}" sh -c 'bundle install --without development test'
+  args:
+    chdir: "{{ release_path.stdout }}"
+
+- name: Rake db migrate
+  command: docker exec -it "{{ rails.stdout }}" sh -c 'bundle exec rake db:migrate'
+  args:
+    chdir: "{{ release_path.stdout }}"
+
+- name: Rake db seed
+  command: docker exec -it "{{ rails.stdout }}" sh -c 'bundle exec rake db:seed'
+  args:
+    chdir: "{{ release_path.stdout }}"
+
+- name: Precompile assets
+  command: docker exec -it "{{ rails.stdout }}" sh -c 'bundle exec rake assets:precompile'
+  args:
+    chdir: "{{ release_path.stdout }}"
+
+- name: Restart docker containers
+  command: docker-compose -f docker-compose.prod.yml -p "{{ app_name }}" restart
+  args:
+    chdir: "{{ release_path.stdout }}"
+...
