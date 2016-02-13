@@ -1,6 +1,7 @@
 # Andora
 
 Andora is ansible roles to deploy Ruby on Rails applications with docker containers in a capistrano style
+
 Project name is [an]sible, [do]cker and [ra]ils
 
 ## Features
