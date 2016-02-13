@@ -45,8 +45,7 @@ Set environment variables in `playbooks/roles/deploy/templates/env.j2`
 - MYSQL_PASSWORD=password
 - MYSQL_DATABASE=app_name_production
 - DEFAULT_URL_OPTIONS='//domain_name'
-- SECRET_KEY_BASE=secret_key
-For generate secret key use the command `rake secret`
+- SECRET_KEY_BASE=secret_key # For generate secret key use the command `rake secret`
 
 Setup a host
 
@@ -73,3 +72,9 @@ Rollback to the previous release
 ```
 $ ansible-playbook playbooks/rollback.yml
 ```
+
+## License
+
+Author: Yuri Smirnov <hello.wwweb@gmail.com>
+
+Licensed under the [MIT License](http://www.opensource.org/licenses/MIT).
