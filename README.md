@@ -73,6 +73,8 @@ Rollback to the previous release
 $ ansible-playbook playbooks/rollback.yml
 ```
 
+**How to configure docker for rails application see [weazar/dora](https://github.com/weazar/dora)**
+
 ## License
 
 Author: Yuri Smirnov <hello.wwweb@gmail.com>
