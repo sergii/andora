@@ -28,7 +28,7 @@ Run an ansible docker container
 
 ```
 $ cd ansible
-$ docker run -v ~/.ssh:/root/.ssh -v "$PWD":/mnt/src -w /mnt/src --rm -it weazar/ansible /bin/bash
+$ docker run -v ~/.ssh:/root/.ssh -v "$PWD":/mnt/src --rm -it weazar/ansible /bin/bash
 ```
 
 Set variables in `group_vars/webservers`
