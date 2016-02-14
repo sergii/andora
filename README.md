@@ -31,17 +31,19 @@ $ cd ansible
 $ docker run -v ~/.ssh:/root/.ssh -v "$PWD":/mnt/src --rm -it weazar/ansible /bin/bash
 ```
 
-Set variables in `group_vars/webservers`
+Set hosts in [inventory.ini](inventory.ini)
+
+Set variables in [group_vars/webservers](group_vars/webservers)
 
 - Set your app name
 - Set git repository path
 
-Set environment variables in `playbooks/roles/deploy/templates/env.j2`
+Set environment variables in [playbooks/roles/deploy/templates/env.j2](playbooks/roles/deploy/templates/env.j2)
 
 - RAILS_ENV=production
 - PORT=3000
 - MYSQL_ROOT_PASSWORD=password
-- MYSQL_USER=app_name
+- MYSQL_USER=app_name))
 - MYSQL_PASSWORD=password
 - MYSQL_DATABASE=app_name_production
 - DEFAULT_URL_OPTIONS='//domain_name'
@@ -77,6 +79,6 @@ $ ansible-playbook playbooks/rollback.yml
 
 ## License
 
-Author: Yuri Smirnov <hello.wwweb@gmail.com>
+Author: Yuri Smirnov <hello@yurismirnov.com>
 
 Licensed under the [MIT License](http://www.opensource.org/licenses/MIT).
